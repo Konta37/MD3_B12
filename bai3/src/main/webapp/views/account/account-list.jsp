@@ -1,5 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%--
+  Created by IntelliJ IDEA.
+  User: LENOVO
+  Date: 7/29/2024
+  Time: 11:10 AM
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -13,43 +20,39 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-<form action="LoadUser" method="get">
+<form action="LoadAccount" method="get">
     <input type="hidden" name="action" value="search">
     <input type="text" name="searchQuery" placeholder="Search User">
     <button type="submit">Search</button>
 </form>
 <div class="container">
-    <h1>LIST USERS!</h1>
+    <h1>LIST ACCOUNTS!</h1>
     <table class="table table-bordered">
         <tr>
             <th>Id</th>
             <th>Username</th>
             <th>Password</th>
-            <th>Full name</th>
-            <th>Address</th>
-            <th>Email</th>
-            <th>Phone</th>
+            <th>Permission</th>
+            <th>Status</th>
             <th>Action</th>
         </tr>
 
-        <c:forEach items="${users}" var="u">
+        <c:forEach items="${accounts}" var="u">
             <tr>
                 <td>${u.id}</td>
                 <td>${u.username}</td>
                 <td>${u.password}</td>
-                <td>${u.fullName}</td>
-                <td>${u.address}</td>
-                <td>${u.email}</td>
-                <td>${u.phone}</td>
+                <td>${u.permission}</td>
+                <td>${u.status ? "Active" : "Inactive"}</td>
                 <td>
-                    <a href="LoadUser?action=edit&id=${u.id}">Update</a>
-                    <a href="LoadUser?action=delete&id=${u.id}">Delete</a>
-                    <a href="LoadUser?action=details&id=${u.id}">Show Details</a>
+                    <a href="LoadAccount?action=edit&id=${u.id}">Update</a>
+                    <a href="LoadAccount?action=delete&id=${u.id}">Delete</a>
+                    <a href="LoadAccount?action=details&id=${u.id}">Show Details</a>
                 </td>
             </tr>
         </c:forEach>
     </table>
-    <a href="LoadUser?action=create">Add new User</a>
+    <a href="LoadAccount?action=create">Add new User</a>
     <button class="btn btn-primary">
         add
     </button>

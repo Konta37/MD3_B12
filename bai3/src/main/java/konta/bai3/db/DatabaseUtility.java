@@ -1,4 +1,4 @@
-package konta.bai1_session12.db;
+package konta.bai3.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,7 +10,7 @@ public class DatabaseUtility {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_jv240408_session12","root","123456");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_jv240408_session12_b3","root","123456");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         } catch (SQLException e) {

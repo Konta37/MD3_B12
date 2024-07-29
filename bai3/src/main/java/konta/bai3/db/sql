@@ -1,0 +1,45 @@
+create database db_jv240408_session12_b3;
+use db_jv240408_session12_b3;
+
+create table account(
+    acc_id int primary key auto_increment,
+    user_name varchar(30),
+    password varchar(30),
+    permission bit,
+    acc_status bit
+);
+
+create table bill(
+    bill_id int auto_increment,
+    bill_code varchar(10),
+    bill_type bit,
+    acc_id_created int,
+    created date,
+    auth_date date,
+    primary key (bill_id,acc_id_created),
+    foreign key (acc_id_created) references account(acc_id)
+
+);
+
+create table product(
+    product_id int auto_increment primary key ,
+    product_name varchar(150),
+    manufacturer varchar(200),
+    created date,
+    batch int,
+    quantity int,
+    product_status bit
+);
+
+create table bill_detail(
+    bill_detail_id int auto_increment,
+    bill_id int,
+    product_id int,
+    quantity int,
+    price float,
+
+    primary key (bill_detail_id,bill_id,product_id),
+    foreign key (bill_id) references bill(bill_id),
+    foreign key (product_id) references product(product_id)
+);
+

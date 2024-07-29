@@ -33,16 +33,16 @@ public class LoadUser extends HttpServlet {
                 showCreateForm(request,response);
                 break;
             case "edit":
-//                showEditForm(request,response);
+                showEditForm(request,response);
                 break;
             case "delete":
-//                deleteUser(request,response);
+                deleteUser(request,response);
                 break;
             case "details":
-//                showDetail(request,response);
+                showDetail(request,response);
                 break;
             case "search":
-//                searchUsers(request,response);
+                searchUsers(request,response);
                 break;
             default:
                 listUsers(request,response);
@@ -61,7 +61,7 @@ public class LoadUser extends HttpServlet {
                 saveUser(request,response);
                 break;
             case "update":
-//                updateUser(request,response);
+                updateUser(request,response);
                 break;
             default:
                 listUsers(request,response);
@@ -91,6 +91,49 @@ public class LoadUser extends HttpServlet {
         userService.add(user);
 
         response.sendRedirect("LoadUser");
+    }
+
+    private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        User existUser = userService.findById(id);
+        request.setAttribute("user", existUser);
+        request.getRequestDispatcher("user-form.jsp").forward(request,response);
+    }
+    //now update it
+    private void updateUser(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        String name = request.getParameter("username");
+        String password = request.getParameter("password");
+        String fullName = request.getParameter("fullName");
+        String address = request.getParameter("address");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+
+        User user = new User(id,name,password,fullName,address,email,phone);
+        userService.edit(user);
+
+        response.sendRedirect("LoadUser");
+    }
+
+    private void deleteUser(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        userService.delete(id);
+        response.sendRedirect("LoadUser");
+    }
+
+    private void showDetail(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        User user = userService.findById(id);
+        request.setAttribute("user", user);
+        request.getRequestDispatcher("user-details.jsp").forward(request, response);
+    }
+
+    private void searchUsers(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String searchQuery = request.getParameter("searchQuery");
+        List<User> searchResults = userService.findByName(searchQuery);
+
+        request.setAttribute("users", searchResults);
+        request.getRequestDispatcher("user-list.jsp").forward(request, response);
     }
 
     public void destroy() {
